@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单页面</title>
+    <style>
+        body {
+            /* 设置背景颜色为淡粉色 */
+            background-color: #FFF0F5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        img {
+            /* 让图片向上移动 */
+            margin-top: -20px;
+            /* 固定图片宽度为 240px */
+            width: 240px;
+            /* 固定图片高度为 240px */
+            height: 240px;
+            /* 保持图片比例并覆盖容器 */
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* 左边按钮样式 */
+        #leftButton {
+            padding: 12px 24px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            /* 设置左边按钮背景颜色为粉红色 */
+            background-color: #FFB6C1;
+            color: #333;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #leftButton:hover {
+            /* 鼠标悬停时左边按钮颜色加深 */
+            background-color: #FFB6C1;
+        }
+
+        /* 右边按钮样式 */
+        #rightButton {
+            padding: 12px 24px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            /* 设置右边按钮背景颜色为淡蓝色 */
+            background-color: #ADD8E6;
+            color: #333;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #rightButton:hover {
+            /* 鼠标悬停时右边按钮颜色加深 */
+            background-color: #87CEEB;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 图片 -->
+    <img id="myImage" src="one.gif" alt="图片">
+    <!-- 段落文字 -->
+    <h1 id="text" style="color: #666;">这是新增的一行文字</h1>
+    <!-- 按钮 -->
+    <div>
+        <button id="leftButton" onclick="showImagePopup()">左边按钮</button>
+        <button id="rightButton" onclick="handleButtonClick()">右边按钮</button>
+    </div>
+
+    <script>
+        // 定义图片数组，按照指定顺序存放图片路径
+        const imageList = ['one.gif', 'two.gif', 'three.gif'];
+        // 当前显示的图片索引
+        let currentIndex = 0;
+
+        function handleButtonClick() {
+            const leftButton = document.getElementById('leftButton');
+            const rightButton = document.getElementById('rightButton');
+            const myImage = document.getElementById('myImage');
+
+            // 适当增加左边按钮的内边距
+            let leftPadding = parseInt(getComputedStyle(leftButton).paddingLeft);
+            leftButton.style.padding = `${leftPadding + 10}px ${leftPadding + 20}px`;
+
+            // 适当减少右边按钮的内边距，确保不会减为负数
+            let rightPadding = parseInt(getComputedStyle(rightButton).paddingLeft);
+            if (rightPadding >= 10) {
+                rightButton.style.padding = `${rightPadding - 10}px ${Math.max(rightPadding - 20, 0)}px`;
+            }
+
+            // 切换图片
+            currentIndex = (currentIndex + 1) % imageList.length;
+            myImage.src = imageList[currentIndex];
+        }
+
+        function showImagePopup() {
+            // 设定要替换的图片路径
+            const newImageSrc = 'one.gif';
+            const myImage = document.getElementById('myImage');
+            // 替换中间图片
+            myImage.src = newImageSrc;
+
+            // 隐藏两个按钮
+            const leftButton = document.getElementById('leftButton');
+            const rightButton = document.getElementById('rightButton');
+            const text = document.getElementById('text');
+            leftButton.style.display = 'none';
+            rightButton.style.display = 'none';
+            text.style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>
